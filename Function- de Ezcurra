@@ -1,0 +1,33 @@
+-- Funcion para ver el nivel de experiencia de cada profesor --
+
+delimiter //
+CREATE FUNCTION nivel_de_experiencia(años_de_experiencia INT) returns VARCHAR(50) deterministic
+BEGIN
+	case
+    when años_de_experiencia<4 then
+		return 'nivel bajo de experiencia';
+    when años_de_experiencia>= 4 and años_de_experiencia<6 then
+		return 'nivel bajo de experiencia';
+	when años_de_experiencia>= 6 then
+		return 'nivel bajo de experiencia';
+	end case;
+END //
+delimiter ;
+
+-- Funcion para ver a que comision pertenece cada alumno --
+
+DELIMITER //
+CREATE FUNCTION obtener_datos_inscripcion(id_inscripción INT) RETURNS TABLE (
+    nombre_alumno VARCHAR(50),
+    nombre_comision VARCHAR(50)
+)
+BEGIN
+    RETURN (
+        SELECT alumno.nombre AS nombre_alumno, comisión.nombre AS nombre_comision
+        FROM inscripción
+        JOIN alumno ON inscripción.id_alumno = alumno.id
+        JOIN comisión ON inscripción.id_comision = comisión.id
+        WHERE inscripción.id = id_inscripción
+    );
+END //
+DELIMITER ;
